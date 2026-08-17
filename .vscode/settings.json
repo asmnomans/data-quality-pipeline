@@ -1,0 +1,29 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "python.envFile": "${workspaceFolder}/.env",
+  "python.analysis.extraPaths": ["${workspaceFolder}/src"],
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": ["tests/unit"],
+  "python.testing.cwd": "${workspaceFolder}",
+
+  "eslint.workingDirectories": ["frontend"],
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/*.egg-info": true
+  },
+  "files.watcherExclude": {
+    "**/.venv/**": true,
+    "**/frontend/node_modules/**": true,
+    "**/artifacts/**": true,
+    "**/great_expectations/**": true
+  },
+  "search.exclude": {
+    "**/.venv": true,
+    "**/frontend/node_modules": true,
+    "**/artifacts": true
+  }
+}

@@ -1,0 +1,47 @@
+# One module = one data domain. Onboarding a new domain (e.g. "shipments")
+# means adding a new modules/<name>/module.yaml - no core code changes.
+
+name: orders
+description: E-commerce order transactions (orders, payments, customers).
+
+source:
+  baseline_path: data/baseline/clean_orders_50k.csv
+  incoming_path: data/incoming/orders/
+  format: csv
+  options:
+    header: true
+  columns:
+    - { name: order_id, type: string, nullable: false }
+    - { name: customer_id, type: string, nullable: true }   # nullable at read time; GE enforces not-null as a *rule*, not a schema constraint
+    - { name: order_amount, type: double, nullable: true }
+    - { name: customer_email, type: string, nullable: true }
+    - { name: payment_method, type: string, nullable: true }
+    - { name: country_code, type: string, nullable: true }
+    - { name: order_timestamp, type: timestamp, nullable: true }
+
+primary_key: order_id
+
+critical_columns:
+  - customer_id
+  - order_amount
+  - customer_email
+  - payment_method
+  - order_timestamp
+
+trigger:
+  modes: [manual, scheduled, event_driven]
+  schedule: "0 2 * * *"                 # nightly at 02:00
+  watch_path: data/incoming/orders/
+
+# Bad values must be REPAIRED, never filtered away: the other six fields on a
+# failing row are valid business data. The cost is customer_email - a malformed
+# address can't be reconstructed, so those rows never converge and quarantine
+# instead. Set false to let a fix resolve a failure by dropping rows.
+repair_not_drop: true
+
+# Omit to inherit config/settings.yaml's global remediation defaults.
+# fix_promotion_mode: auto
+# rule_promotion_mode: manual
+# loop_till_no_exception: true
+# max_loops: 5
+# export_quarantined: true

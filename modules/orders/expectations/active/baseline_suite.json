@@ -1,0 +1,129 @@
+{
+  "suite_name": "orders_baseline_suite",
+  "version": 5,
+  "expectations": [
+    {
+      "expectation_type": "ExpectColumnValuesToNotBeNull",
+      "kwargs": {
+        "column": "order_id"
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToBeUnique",
+      "kwargs": {
+        "column": "order_id"
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToNotBeNull",
+      "kwargs": {
+        "column": "customer_id"
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToNotBeNull",
+      "kwargs": {
+        "column": "order_amount"
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToBeBetween",
+      "kwargs": {
+        "column": "order_amount",
+        "min_value": 10.01,
+        "max_value": 500.0
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToNotBeNull",
+      "kwargs": {
+        "column": "customer_email"
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToMatchRegex",
+      "kwargs": {
+        "column": "customer_email",
+        "regex": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToNotBeNull",
+      "kwargs": {
+        "column": "payment_method"
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToBeInSet",
+      "kwargs": {
+        "column": "payment_method",
+        "value_set": [
+          "APPLE_PAY",
+          "CREDIT_CARD",
+          "DEBIT_CARD",
+          "PAYPAL"
+        ]
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToBeInSet",
+      "kwargs": {
+        "column": "country_code",
+        "value_set": [
+          "CA",
+          "DE",
+          "FR",
+          "UK",
+          "US"
+        ]
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToNotBeNull",
+      "kwargs": {
+        "column": "order_timestamp"
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToBeBetween",
+      "kwargs": {
+        "column": "order_timestamp",
+        "min_value": "2026-07-29T16:00:01",
+        "max_value": "2026-08-05T16:00:00"
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToBeBetween",
+      "kwargs": {
+        "column": "order_amount",
+        "min_value": 0,
+        "max_value": 1000
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToBeBetween",
+      "kwargs": {
+        "column": "order_amount",
+        "min_value": 0,
+        "max_value": 1000
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToBeBetween",
+      "kwargs": {
+        "column": "order_timestamp",
+        "min_value": "2026-07-29 16:00:01",
+        "max_value": "2026-08-05 16:00:00",
+        "mostly": 0.0
+      }
+    },
+    {
+      "expectation_type": "ExpectColumnValuesToBeBetween",
+      "kwargs": {
+        "column": "order_amount",
+        "min_value": 0,
+        "max_value": 1000
+      }
+    }
+  ]
+}

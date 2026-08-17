@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "backend: run (with auto-reload)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe -m uvicorn backend.app.main:app --reload --reload-dir src --reload-dir backend --reload-dir config --reload-dir modules --port 8000",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "panel": "dedicated", "group": "servers" }
+    },
+    {
+      "label": "frontend: npm install",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "problemMatcher": []
+    },
+    {
+      "label": "frontend: dev server",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "isBackground": true,
+      "presentation": { "panel": "dedicated", "group": "servers" },
+      "problemMatcher": {
+        "pattern": { "regexp": "^$", "file": 1, "location": 2, "message": 3 },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "VITE",
+          "endsPattern": "ready in"
+        }
+      }
+    },
+    {
+      "label": "test: unit (pytest)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe -m pytest tests/unit -v",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "wait: backend healthy",
+      "type": "shell",
+      "command": "for ($i=0; $i -lt 30; $i++) { try { $r = Invoke-WebRequest -Uri http://127.0.0.1:8000/health -UseBasicParsing -TimeoutSec 1; if ($r.StatusCode -eq 200) { Write-Host 'Backend is up.'; exit 0 } } catch {}; Start-Sleep -Seconds 1 }; Write-Host 'Backend did not respond within 30s - check the \"backend: run\" terminal tab for the actual error.'; exit 1",
+      "presentation": { "reveal": "silent", "panel": "shared" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run the App (starts backend + frontend, opens browser)",
+      "dependsOn": ["backend: run (with auto-reload)", "wait: backend healthy", "frontend: dev server"],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}

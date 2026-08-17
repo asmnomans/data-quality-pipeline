@@ -1,0 +1,63 @@
+:root {
+  color-scheme: light dark;
+  --border: #d8dee6;
+  --muted: #667085;
+  --accent: #2f6fed;
+  --danger: #d64545;
+  --success: #1a9e6a;
+  --bg-card: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --border: #333c48;
+    --muted: #9aa4b2;
+    --bg-card: #1b1f27;
+  }
+  body { background: #12151a; color: #e6e9ee; }
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, sans-serif; }
+
+.app-shell { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+.app-header { display: flex; align-items: baseline; gap: 2rem; margin-bottom: 1.5rem; }
+.app-header h1 { font-size: 1.25rem; margin: 0; }
+.app-header nav a { margin-right: 1rem; text-decoration: none; color: var(--muted); font-weight: 600; }
+.app-header nav a.active { color: var(--accent); }
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  background: var(--bg-card);
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border); }
+th { color: var(--muted); font-weight: 600; }
+
+.badge {
+  display: inline-block; padding: 0.15rem 0.55rem; border-radius: 999px;
+  font-size: 0.75rem; font-weight: 600;
+}
+.badge.success { background: rgba(26,158,106,0.15); color: var(--success); }
+.badge.danger { background: rgba(214,69,69,0.15); color: var(--danger); }
+.badge.muted { background: rgba(102,112,133,0.15); color: var(--muted); }
+
+button {
+  border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.9rem;
+  background: var(--bg-card); cursor: pointer; font-weight: 600; font-size: 0.85rem;
+}
+button.primary { background: var(--accent); border-color: var(--accent); color: white; }
+button.danger { background: var(--danger); border-color: var(--danger); color: white; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+pre {
+  background: rgba(127,127,127,0.08); border-radius: 6px; padding: 0.75rem;
+  overflow-x: auto; font-size: 0.8rem; white-space: pre-wrap; word-break: break-word;
+}
+.muted { color: var(--muted); }
+.row { display: flex; gap: 0.5rem; align-items: center; }
+.stack { display: flex; flex-direction: column; gap: 0.75rem; }

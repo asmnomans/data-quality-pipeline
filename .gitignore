@@ -1,0 +1,21 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+artifacts/runs/*
+!artifacts/runs/.gitkeep
+great_expectations/gx/uncommitted/
+node_modules/
+frontend/dist/
+frontend/tsconfig.tsbuildinfo
+*.egg-info/
+.DS_Store
+~$*.xlsx
+
+# Per-run module state. The seeds under active/ ARE tracked - the pipeline
+# rewrites them every run, so commit them back deliberately, not by accident.
+modules/*/expectations/archive/
+modules/*/expectations/candidate/
+modules/*/expectations/promotion_log.jsonl
+modules/*/remediation_code/*

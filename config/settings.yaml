@@ -1,0 +1,52 @@
+# Global settings. Module-specific overrides live in modules/<name>/module.yaml.
+
+paths:
+  data_root: ./data
+  artifacts_root: ./artifacts
+  modules_root: ./modules
+  great_expectations_root: ./great_expectations
+
+llm:
+  # Swap these two lines (or set fallback_provider back to local_llama) once
+  # a real OPENAI_API_KEY is in .env - no code changes needed, just this file.
+  primary_provider: local_llama
+  fallback_provider: null       # no OpenAI key yet - don't waste time/retries hitting it
+  max_retries: 2
+  request_timeout_seconds: 60
+  providers:
+    openai:
+      base_url: https://api.openai.com/v1
+      model: gpt-4o-mini
+      temperature: 0
+      api_key_env: OPENAI_API_KEY
+    local_llama:
+      base_url_env: LOCAL_LLAMA_BASE_URL
+      model_env: LOCAL_LLAMA_MODEL
+      temperature: 0
+      api_key_env: LOCAL_LLAMA_API_KEY
+      mode: json               # Ollama returns tool calls as message content; "tools" discards them
+
+sampling:
+  max_sample_rows_per_failure: 8
+  mask_pii: true
+
+remediation:
+  fix_promotion_mode: auto      # auto | manual
+  rule_promotion_mode: auto   # auto | manual
+  loop_till_no_exception: true  # false = one RCA->fix->re-validate pass only; true = loop till converged/stuck
+  max_loops: 5                  # hard cap regardless of loop_till_no_exception
+  export_quarantined: true      # write still-failing rows to fileOutput/QuarantineData/ when the loop closes
+  # true = a fix must REPAIR values in place; no row may ever be dropped.
+  # Unrepairable columns then stop converging and quarantine instead.
+  # modules/<name>/module.yaml's repair_not_drop overrides this.
+  repair_not_drop: false
+
+jobs:
+  runner: inprocess             # inprocess | (future: celery)
+  max_concurrent_runs_per_module: 1
+
+api:
+  host: 127.0.0.1
+  port: 8000
+  cors_origins:
+    - http://localhost:5173
